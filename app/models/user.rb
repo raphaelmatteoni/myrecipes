@@ -37,4 +37,8 @@ class User < ApplicationRecord
     end
   end
 
+  def name_or_email
+  	self.name.present? ? self.name : self.email
+  end
+
 end

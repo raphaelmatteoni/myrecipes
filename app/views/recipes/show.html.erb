@@ -20,9 +20,9 @@
     <div class="row from">
       <strong>De</strong><br>
       <% if @recipe.user.image.present? %>
-        <%= image_tag(@recipe.user.image, size: "40") %> <%= @recipe.user.name %>
+        <%= image_tag(@recipe.user.image, size: "40") %> <%= @recipe.user.name_or_email %>
       <% else %>
-        <%= image_tag('no-image.png', size: "40") %> <%= @recipe.user.name %> 
+        <%= image_tag('no-image.png', size: "40") %> <%= @recipe.user.name_or_email %> 
       <% end %>
     </div>
 

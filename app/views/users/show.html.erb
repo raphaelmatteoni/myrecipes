@@ -1,0 +1,112 @@
+<% if notice.present? %>
+  <div class="alert alert-success"><%= notice %></div>
+<% end -%>
+<div class="panel panel-default text-center user-show">
+  <div class="panel-heading">
+    <h2 class="panel-title"><%= @user.name_or_email %></h2>
+  </div>
+  <div class="panel-body">
+    <div class="row image">
+      <% if @user.image.present? %>
+        <%= image_tag(@user.image, size: "100") %>
+      <% else %>
+        <%= image_tag('no-image.png', size: "100") %>
+      <% end %>
+    </div>
+    <div class="row email">
+      <strong>Email</strong><br>
+      <%= @user.email %>
+    </div>
+    <div class="row created-at">
+      <strong>Criado em</strong><br>
+      <%= @user.created_at.strftime('%d/%m/%Y') %>
+    </div>
+    <div class="row recipes-count">
+      <strong>Receitas criadas</strong><br>
+      <%= @user.recipes.count %>
+    </div>
+    <div class="row recipe-received-count">
+      <strong>Receitas recebidas</strong><br>
+      <%= @user.recipe_shares.count %>
+    </div>
+    <div class="row recipe-shared-count">
+      <strong>Receitas compartilhadas</strong><br>
+      <%= RecipeShare.where(recipe_id: Recipe.where(user_id: @user.id)).count %>
+    </div>
+
+  </div>
+
+  <div class="panel-footer">
+    <% if @user != current_user %>
+    	<%= link_to 'Compartilhar uma receita', new_recipe_share_path(user_id: @user.id), class: "btn btn-primary" %>
+    	<%= link_to 'Voltar', users_path, class: "btn btn-danger" %>
+    <% else %>
+    	<%= link_to 'Voltar', users_path, class: "btn btn-danger" %>
+    <% end -%>
+  </div>
+</div>
+
+
+<% if current_user == @user %>
+  <div class="panel panel-default ingredients-show">
+    <div class="panel-heading">
+      <h3 class="panel-title text-center">Receitas compartilhadas por você</h3>
+    </div>
+    <% if @recipes_shared_by_you.length == 0 %>
+      <div class="alert alert-default text-center">Você ainda não compartilhou receitas</div>
+    <% else -%>
+      <table class="table table-striped">
+        <thead>
+         <th class="col-md-2">Imagem</th> 
+         <th class="col-md-2">Receita</th> 
+         <th class="col-md-5">Descrição</th> 
+         <th class="col-md-3">Compartilhada com</th> 
+        </thead>
+        <tbody>
+          <% @recipes_shared_by_you.each do |recipe_share| %>
+            <tr>
+              <td>
+                <%= link_to recipe_path(recipe_share.recipe), class: "thumbnail" do %>
+                  <%= image_tag recipe_share.recipe.photo.url(:thumbnail) %>
+                <% end -%>              
+              </td>
+              <td><%= recipe_share.recipe.title %></td>
+              <td><%= recipe_share.recipe.description %></td>
+              <td><%= link_to recipe_share.user.name_or_email, user_path(recipe_share.user) %></td>
+            </tr>
+          <% end -%>
+        </tbody>
+      </table>
+    <% end -%>
+  </div>
+<% else %>
+  <div class="panel panel-default ingredients-show">
+    <div class="panel-heading">
+      <h3 class="panel-title text-center">Receitas compartilhadas com este usuário</h3>
+    </div>
+    <% if @recipes_shared_with_user.length == 0 %>
+    	<div class="alert alert-default text-center">Você ainda não compartilhou receitas com este usuário.</div>
+  	<% else -%>
+  	  <table class="table table-striped">
+  	    <thead>
+         <th class="col-md-2">Imagem</th> 
+  	     <th class="col-md-2">Receita</th> 
+  	     <th class="col-md-8">Descrição</th> 
+  	    </thead>
+  	    <tbody>
+  	      <% @recipes_shared_with_user.each do |recipe_share| %>
+  	        <tr>
+              <td>
+                <%= link_to recipe_path(recipe_share.recipe), class: "thumbnail" do %>
+                  <%= image_tag recipe_share.recipe.photo.url(:thumbnail) %>
+                <% end -%>              
+              </td>
+  	          <td><%= recipe_share.recipe.title %></td>
+  	          <td><%= recipe_share.recipe.description %></td>
+  	        </tr>
+  	      <% end -%>
+  	    </tbody>
+  	  </table>
+    <% end -%>
+  </div>
+<% end -%>

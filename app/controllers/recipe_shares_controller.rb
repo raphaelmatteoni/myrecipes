@@ -7,7 +7,11 @@ class RecipeSharesController < ApplicationController
 
   def new
     @recipe_share = RecipeShare.new
-    @recipe_share.recipe_id = params[:recipe_id]
+    if params[:recipe_id].present?
+      @recipe_share.recipe_id = params[:recipe_id]
+    elsif params[:user_id].present?
+      @recipe_share.user_id = params[:user_id]
+    end
   end
 
   def create
@@ -15,7 +19,7 @@ class RecipeSharesController < ApplicationController
 
     respond_to do |format|
       if @recipe_share.save
-        format.html { redirect_to recipes_path, notice: "Receita #{@recipe_share.recipe.title} compartilhada com #{@recipe_share.user.name}" }
+        format.html { redirect_to recipes_path, notice: "Receita #{@recipe_share.recipe.title} compartilhada com #{@recipe_share.user.name_or_email}" }
         format.json { render :show, status: :created, location: @recipe_share }
       else
         format.html { render :new }

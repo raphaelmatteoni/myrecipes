@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @recipes_shared_by_you = RecipeShare.where(recipe_id: Recipe.where(user_id: current_user.id))
+    @recipes_shared_with_user = @user.recipe_shares.where(recipe_id: Recipe.where(user_id: current_user.id))
   end
 
 

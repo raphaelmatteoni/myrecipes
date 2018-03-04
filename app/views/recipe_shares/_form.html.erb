@@ -5,10 +5,12 @@
   <div class="row">
     <div class="col-md-4">
       <div class="form-inputs">
-      	<div class="hidden">
-        	<%= f.association :recipe, selected: @recipe_share.recipe_id %>
-      	</div>
-        <%= f.association :user, label: "Compartilhar com:", prompt: "Selecione o usuário", collection: User.where.not(id: current_user.id) %>
+        <div class="<%= 'hidden' if @recipe_share.recipe_id.present? %>">
+          <%= f.association :recipe, label: "Receita", prompt: "Selecione uma receita", collection: current_user.recipes %>
+        </div>
+        <div class="<%= 'hidden' if @recipe_share.user_id.present? %>">
+        <%= f.association :user, label: "Compartilhar com:", prompt: "Selecione o usuário", collection: User.where.not(id: current_user.id), label_method: :name_or_email %>
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="<%= controller_name %> <%= action_name %>">
 		<nav class="navbar navbar-default custom-navbar">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
@@ -29,14 +29,14 @@
 		    <ul class="nav navbar-nav">
 			    <% if current_user.present? %>
 			      <li class="welcome-user">
-			      	<a href="#">
-								<span>Olá <%= current_user.name %></span>
+			      	<%= link_to user_path(current_user) do %>
+								<span>Olá <%= current_user.name_or_email %></span>
 								<% if current_user.image.present? %>
 									<%= image_tag(current_user.image, size: "40") %>
 								<% else %>
 									<%= image_tag('no-image.png', size: "40") %>
 								<% end %>
-			      	</a>
+			      	<% end -%>
 			      </li>
 					<% end -%>
 		      <li class="<%= 'active' if params[:controller] == 'recipes' && params[:action] == 'index' %>">
