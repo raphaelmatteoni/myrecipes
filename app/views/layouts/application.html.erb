@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myrecipes</title>
+    <title>MyRecipes</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,6 +9,68 @@
   </head>
 
   <body>
-    <%= yield %>
+		<nav class="navbar navbar-default custom-navbar">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <%= link_to "<i class='fas fa-book'></i> MyRecipes".html_safe, root_path, class: "navbar-brand" %>
+		    </div>
+		    <% if current_user.present? %>
+			    <%= form_tag recipes_path, method: :get, class: "navbar-form navbar-left" do %>
+			      <div class="input-group">
+			        <input type="text" class="form-control" placeholder="Buscar receita" name="by_title">
+			        <div class="input-group-btn">
+			          <button class="btn btn-default" type="submit">
+			            <i class="glyphicon glyphicon-search"></i>
+			          </button>
+			        </div>
+			      </div>
+			    <% end -%>
+		    <% end -%>
+		    <ul class="nav navbar-nav">
+			    <% if current_user.present? %>
+			      <li class="welcome-user">
+			      	<a href="#">
+								<span>Olá <%= current_user.name %></span>
+								<% if current_user.image.present? %>
+									<%= image_tag(current_user.image, size: "40") %>
+								<% else %>
+									<%= image_tag('no-image.png', size: "40") %>
+								<% end %>
+			      	</a>
+			      </li>
+					<% end -%>
+		      <li class="<%= 'active' if params[:controller] == 'recipes' && params[:action] == 'index' %>">
+		      	<%= link_to "Página inicial", recipes_path %>
+		      </li>
+		      <li><a href="#">About</a></li>
+		      <li><a href="#">FAQ</a></li>
+		      <% if current_user.present? %>
+		      	<li><%= link_to "Sair", destroy_user_session_path, method: :delete %></a></li>
+	      	<% end -%>
+		    </ul>
+		  </div>
+		</nav>
+
+		<% if current_user.present? %>
+			<div id="sidebar">
+			  <ul class="nav nav-list">
+			    <li class="<%= 'active' if params[:controller] == 'recipes' && (params[:action] == 'index' || params[:action] == 'show') %>">
+		        <%= link_to "Minhas receitas", recipes_path %></a>
+			    </li>
+			    <li class="<%= 'active' if params[:controller] == 'recipe_shares' %>">
+		        <%= link_to "Receitas recebidas", recipe_shares_path %></a>
+			    </li>
+			    <li class="<%= 'active' if params[:controller] == 'recipes' && (params[:action] == 'new' || params[:action] == 'create' ) %>">
+		        <%= link_to "Criar receita", new_recipe_path %></a>
+			    </li>
+			    <li class="<%= 'active' if params[:controller] == 'users' %>">
+			        <%= link_to "Usuários", users_path %></a>
+			    </li>
+			  </ul>
+			</div>
+		<% end -%>
+  	<div class="main-content <%= current_user.present? ? '' : 'full-width' %>">
+    	<%= yield %>
+  	</div>
   </body>
 </html>

@@ -1,0 +1,11 @@
+<h1>Receitas recebidas</h1>
+
+<% if @recipe_shares.length == 0 %>
+  <div class="alert alert-info">Você ainda não recebeu nenhuma receita.</div>
+<% else -%>
+	<div class="recipes-box">
+	  <% @recipe_shares.each do |recipe| %>
+	    <%= render partial: "layouts/shared/recipe_row", locals: {recipe: recipe.recipe} %>
+	  <% end -%>
+	</div>
+<% end -%>

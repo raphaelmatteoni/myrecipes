@@ -1,0 +1,59 @@
+<% if notice.present? %>
+  <div class="alert alert-success"><%= notice %></div>
+<% end -%>
+<div class="panel panel-default text-center recipe-show">
+  <div class="panel-heading">
+    <h2 class="panel-title"><%= @recipe.title %></h2>
+  </div>
+  <div class="panel-body">
+    <div class="row image">
+      <%= image_tag @recipe.photo.url(:medium) %>
+    </div>
+    <div class="row description">
+      <strong>Descrição</strong><br>
+      <%= @recipe.description %>
+    </div>
+    <div class="row how_to_prepare">
+      <strong>Modo de preparo</strong><br>
+      <%= @recipe.how_to_prepare %>
+    </div>
+    <div class="row from">
+      <strong>De</strong><br>
+      <% if @recipe.user.image.present? %>
+        <%= image_tag(@recipe.user.image, size: "40") %> <%= @recipe.user.name %>
+      <% else %>
+        <%= image_tag('no-image.png', size: "40") %> <%= @recipe.user.name %> 
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="panel-footer">
+    <% if @recipe.user == current_user %>
+    	<%= link_to 'Editar', edit_recipe_path(@recipe), class: "btn btn-primary" %>
+    	<%= link_to 'Voltar', recipes_path, class: "btn btn-danger" %>
+    <% else %>
+    	<%= link_to 'Voltar', recipe_shares_path, class: "btn btn-danger" %>
+    <% end -%>
+  </div>
+</div>
+
+<div class="panel panel-default ingredients-show">
+  <div class="panel-heading">
+    <h3 class="panel-title text-center">Ingredientes</h3>
+  </div>
+  <table class="table table-striped">
+    <thead>
+     <th class="text-right col-md-6">Quantidade</th> 
+     <th class="col-md-6">Ingrediente</th> 
+    </thead>
+    <tbody>
+      <% @recipe.ingredients.each do |ing| %>
+        <tr>
+          <td class="text-right"><%= ing.amount %></td>
+          <td><%= ing.name %></td>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+</div>

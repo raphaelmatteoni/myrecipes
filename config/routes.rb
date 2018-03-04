@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
-	root to: 'home#index'
+	root to: 'recipes#index'
+  
+	get '/users', to: 'users#index'  
+	get '/user/:id', to: 'users#show', as: 'user'
+
+  resources :recipes
+  
+  resources :recipe_shares
+  
+	devise_for :users, :controllers => { :omniauth_callbacks => "users/callbacks" }
+
+
 end

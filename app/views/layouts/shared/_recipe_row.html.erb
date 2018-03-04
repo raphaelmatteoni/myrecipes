@@ -1,0 +1,97 @@
+<div class="row individual-recipe">
+
+	<div class="recipe-photo col-md-2">
+		<div class="row">
+			<div class="col-md-12">
+				<%= link_to recipe_path(recipe), class: "thumbnail" do %>
+					<%= image_tag recipe.photo.url(:thumbnail) %>
+				<% end -%>
+			</div>
+		</div>
+	</div>
+
+	<div class="recipe-info col-md-9">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="title">
+					<%= link_to recipe_path(recipe) do %>
+						<span><%= recipe.title %></span>
+					<% end -%>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="col-md-12">
+				<div class="info description">
+					<strong>Descrição: </strong>
+					<span><%= truncate(recipe.description, length: 65, separator: ' ') %></span>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="col-md-12">
+				<div class="info how_to_prepare">
+					<strong>Modo de preparo: </strong>
+					<span><%= truncate(recipe.how_to_prepare, length: 65, separator: ' ') %></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="info from">
+					<strong>De: </strong>
+					<span><%= recipe.user.name %></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="recipe-actions col-md-1">
+		<% if recipe.user == current_user %>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="info share">
+						<%= link_to new_recipe_share_path(recipe_id: recipe.id) do %>
+							<i class="fas fa-share-square"></i>
+						<% end -%>
+					</div>
+				</div>
+			</div>
+		<% end -%>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="info show">
+					<%= link_to recipe do %>
+						<i class="fas fa-eye"></i>
+					<% end -%>
+				</div>
+			</div>
+		</div>
+
+		<% if recipe.user == current_user %>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="info edit">
+						<%= link_to edit_recipe_path(recipe) do %>
+							<i class="fas fa-edit"></i>
+						<% end -%>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="info remove">
+						<%= link_to recipe, method: :delete, data: { confirm: 'Are you sure?' } do %>
+							<i class="fas fa-trash-alt"></i>
+						<% end -%>
+					</div>
+				</div>
+			</div>
+		<% end -%>			
+	</div>
+</div>

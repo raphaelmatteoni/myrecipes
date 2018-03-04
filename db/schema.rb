@@ -10,7 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302172520) do
+ActiveRecord::Schema.define(version: 20180304031131) do
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string "name"
+    t.string "amount"
+    t.integer "recipe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
+  end
+
+  create_table "recipe_shares", force: :cascade do |t|
+    t.integer "recipe_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_recipe_shares_on_recipe_id"
+    t.index ["user_id"], name: "index_recipe_shares_on_user_id"
+  end
+
+  create_table "recipes", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.text "how_to_prepare"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "photo_file_name"
+    t.string "photo_content_type"
+    t.integer "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.index ["user_id"], name: "index_recipes_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

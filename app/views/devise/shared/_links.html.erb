@@ -1,0 +1,5 @@
+<div class="text-center login-with-facebook">
+	<%- if devise_mapping.omniauthable? %>
+	  <%= link_to "<i class='fab fa-facebook'></i> Sign in with Facebook".html_safe, user_facebook_omniauth_authorize_url(), class: "btn btn-lg btn-primary" %>
+	<% end -%>
+</div>

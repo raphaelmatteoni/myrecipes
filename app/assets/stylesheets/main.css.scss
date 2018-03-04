@@ -1,0 +1,21 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+@import "styles/home.css.sass";
+@import "styles/callbacks.css.sass";
+
+@import "styles/recipes/index.css.sass";
+@import "styles/recipes/show.css.sass";
+@import "styles/recipes/new.css.sass";
+
+@import "styles/users/new.css.sass";
+@import "styles/users/index.css.sass";
+
+@import "components/header.css.sass";
+@import "components/sidebar.css.sass";
+
+/*@import "styles/scaffolds.scss";*/
+
+

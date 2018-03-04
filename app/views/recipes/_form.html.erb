@@ -1,0 +1,48 @@
+<%= simple_form_for(@recipe, html: { class: 'form-vertical', multipart: true }) do |f| %>
+  
+  <% if @recipe.photo.present? %>
+    <%= image_tag @recipe.photo.url(:medium) %>
+  <% end -%>
+
+  <%= f.input :photo, as: :file, label: "Foto" %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.input :title, label: "Título" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.input :description, label: "Descrição" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.input :how_to_prepare, label: "Modo de preparo" %>
+    </div>
+  </div>
+  <div class="row">
+    <h2>Ingredientes</h2>  
+  </div>
+  <%= f.simple_fields_for :ingredients do |f| %>
+    <%= render 'recipes/ingredient_fields', f: f %>
+  <% end -%>
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= link_to_add_fields 'Adicionar um ingrediente', f, :ingredients, nil, class: "btn btn-success" %>
+      <%= link_to 'Voltar', recipes_path, class: "btn btn-danger" %>
+      <%= f.button :submit, "Salvar" %>
+    </div>
+  </div>
+<% end %>
+
+
+<script type="text/javascript">
+  $('[data-form-prepend]').click( function(e) { 
+    var obj = $( $(this).attr('data-form-prepend') );
+    obj.find('input, select, textarea').each( function() {
+      $(this).attr( 'name', function() {
+        return $(this).attr('name').replace( 'new_record', (new Date()).getTime() );
+      });
+    });
+    obj.insertBefore( this );
+      return false;
+  });
+</script>

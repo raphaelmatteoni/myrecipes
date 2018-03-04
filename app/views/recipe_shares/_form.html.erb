@@ -1,0 +1,19 @@
+
+<%= simple_form_for(@recipe_share, html: { class: 'form-vertical' } ) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-inputs">
+      	<div class="hidden">
+        	<%= f.association :recipe, selected: @recipe_share.recipe_id %>
+      	</div>
+        <%= f.association :user, label: "Compartilhar com:", prompt: "Selecione o usuário", collection: User.where.not(id: current_user.id) %>
+      </div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= link_to 'Back', recipes_path, class: "btn btn-danger" %>
+    <%= f.button :submit, "Compartilhar" %>
+  </div>
+<% end %>

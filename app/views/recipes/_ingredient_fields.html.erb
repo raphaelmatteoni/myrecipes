@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-7">
+				<%= f.input :name, label: "Nome" %>
+			</div>
+			<div class="col-md-3">
+				<%= f.input :amount, label: "Quantidade" %>
+			</div>
+			<div class="col-md-2 remove-checkbox">
+		    <% if f.object.persisted? %>
+		      <%= f.check_box :_destroy %>
+		      <%= f.label :_destroy, "Remover" %>
+		    <% end %>
+			</div>
+		</div>
+	</div>
+</div>

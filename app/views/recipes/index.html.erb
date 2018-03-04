@@ -1,0 +1,15 @@
+<% if notice.present? %>
+	<div class="alert alert-success"><%= notice %></div>
+<% end -%>
+
+<h1>Minhas receitas</h1>
+
+<% if @recipes.length == 0 %>
+  <div class="alert alert-info">Você ainda não possui receitas cadastradas.</div>
+<% else -%>
+	<div class="recipes-box">
+	  <% @recipes.each do |recipe| %>
+	    <%= render partial: "layouts/shared/recipe_row", locals: {recipe: recipe} %>
+	  <% end -%>
+	</div>
+<% end -%>
