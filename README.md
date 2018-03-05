@@ -1,24 +1,21 @@
-# README
+# MyRecipes
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Cookbook application that the user can sign in with Facebook and create their recipes and share with other users of the platform.
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-* System dependencies
+### Prerequisites
 
-* Configuration
+ - Ruby 2.4.0
+ - Rails 5.1.4
+ - Sqlite3
+  
+### Installing and running
 
-* Database creation
+```
+- bundle install
+- rake db:migrate
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
